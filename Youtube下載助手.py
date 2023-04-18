@@ -16,7 +16,10 @@ def download_file(link, resolution, download_type, save_path):
         YT.streams.filter(type="audio").first().download(output_path=save_path, filename=f'{YT.title}.mp3')
     list_box.insert(tk.END, f'{YT.title} 下載完成!')
 
+#-------------檢查function-------------
+
 def check():
+    #判斷是否有填寫需要的資料
     video_link = link_entry.get()
     download_path = path_entry.get()
     download_type = download_type_menu.get()
@@ -33,6 +36,8 @@ def check():
     if resolution == "" and download_type != "純聲音":
         messagebox.showwarning('錯誤','請選擇解析度')
         return
+    
+    #判斷連結是否為播放清單
     try:
         if "list=" in video_link and "watch?" not in video_link:
             YT=Playlist(video_link)
@@ -43,6 +48,7 @@ def check():
             YT=YouTube(video_link)
             list_box.insert(tk.END,f'{YT.title} 開始下載...')
             threading.Thread(target=download_file,args=(video_link, resolution, download_type, download_path)).start()
+    
     #顯示錯誤訊息
     except Exception as error_message:
         messagebox.showwarning("錯誤",str(error_message))
