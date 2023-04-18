@@ -3,8 +3,8 @@ import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
 from pytube import YouTube, Playlist
 
-
 #-------------下載function-------------
+
 def download_file(link, resolution, download_type, save_path):
     YT=YouTube(link)
     if download_type == "影片":
@@ -43,9 +43,11 @@ def check():
             YT=YouTube(video_link)
             list_box.insert(tk.END,f'{YT.title} 開始下載...')
             threading.Thread(target=download_file,args=(video_link, resolution, download_type, download_path)).start()
+    #顯示錯誤訊息
     except Exception as error_message:
         messagebox.showwarning("錯誤",str(error_message))
         link_entry.delete(0, tk.END)
+
 #-------------介面設置-------------
 
 #主視窗設定
